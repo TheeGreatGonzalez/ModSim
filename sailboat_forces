@@ -1,0 +1,31 @@
+function out = sailboat_forces(x,delta,wind,P)
+    
+    x    = x(1);
+    y    = x(2);
+    theta= x(3);
+    v    = x(4);
+    w    = x(5);
+    dr   = delta(1);
+    ds   = delta(2);
+    Atw  = wind(1);
+    Phitw= wind(2);
+    
+    p1 = P.p1;
+    p2 = P.p2;
+    p3 = P.p3;
+    p4 = P.p4;
+    p5 = P.p5;
+    p6 = P.p6;
+    p7 = P.p7;
+    p8 = P.p8;
+
+    Waw=[Atw*cos(Phitw-theta)-v
+        Atw*sin(Phitw-theta)];
+    
+    ds=-sign(atan2(Waw))*min(abs(pi-abs(atan2(Waw))),abs(ds));
+    
+    gs=-p4*abs(Waw)*sin(ds-atan2(Waw));
+    
+    gr=-p5*v^2*sin(dr);
+    
+    out=[gr;gs;Atw;Phitw];
